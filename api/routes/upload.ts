@@ -1,5 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
+import path from "node:path";
 import { uploadLimiter } from "../middleware/rateLimiter.js";
 import { taskManager } from "../services/TaskManager.js";
 import { getOriginalImagePath } from "../lib/storage.js";
@@ -17,7 +19,7 @@ const storage = multer.diskStorage({
       return cb(new Error("taskId 不存在"), "");
     }
     const dir = getOriginalImagePath(taskId, file.originalname);
-    cb(null, require("node:path").dirname(dir));
+    cb(null, path.dirname(dir));
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -28,7 +30,7 @@ const upload = multer({
   storage,
   limits: { fileSize: MAX_FILE_SIZE },
   fileFilter: (req, file, cb) => {
-    const ext = require("node:path").extname(file.originalname).toLowerCase();
+    const ext = path.extname(file.originalname).toLowerCase();
     if (ALLOWED_EXTENSIONS.includes(ext)) {
       cb(null, true);
     } else {
@@ -39,7 +41,7 @@ const upload = multer({
 
 router.post("/", uploadLimiter, async (req: Request, res: Response) => {
   try {
-    const taskId = (req.body as any).taskId || require("uuid").v4();
+    const taskId = (req.body as any).taskId || uuidv4();
     (req as any).taskId = taskId;
 
     const originalFileName = (req.body as any).fileName || "未命名图片";
