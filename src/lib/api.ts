@@ -78,6 +78,7 @@ export const api = {
     taskId: string,
     format: ExportFormat,
     editedContent?: string,
+    options?: { fontSize?: number; fontFamily?: string; includeImage?: boolean },
   ) => {
     return request<{
       fileId: string;
@@ -89,7 +90,11 @@ export const api = {
       body: JSON.stringify({
         format,
         editedContent,
-        options: { includeImage: false },
+        options: {
+          includeImage: options?.includeImage ?? false,
+          fontSize: options?.fontSize ?? 14,
+          fontFamily: options?.fontFamily ?? "Noto Sans SC",
+        },
       }),
     });
   },

@@ -1,12 +1,29 @@
 import { useState } from "react";
-import { X, Download, FileText, File, FileCode, FileImage, CheckCircle } from "lucide-react";
-import type { ExportFormat } from "../../shared/types.js";
+import { X, Download, FileText, File, FileCode, FileImage, CheckCircle, Image, Type } from "lucide-react";
+import type { ExportFormat, ExportRequest } from "../../shared/types.js";
 import { useOCRStore } from "../store/ocrStore.js";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
+
+interface ExportOptions {
+  fontSize: number;
+  fontFamily: string;
+  includeImage: boolean;
+}
+
+const FONT_OPTIONS: { value: string; label: string }[] = [
+  { value: "Noto Sans SC", label: "思源黑体" },
+  { value: "SimHei", label: "黑体" },
+  { value: "SimSun", label: "宋体" },
+  { value: "FangSong", label: "仿宋" },
+  { value: "KaiTi", label: "楷体" },
+  { value: "Microsoft YaHei", label: "微软雅黑" },
+];
+
+const FONT_SIZE_OPTIONS: number[] = [10, 11, 12, 14, 16, 18, 20, 24, 28, 32];
 
 const FORMATS: {
   format: ExportFormat;
@@ -49,17 +66,24 @@ export default function ExportModal({ isOpen, onClose }: Props) {
   const [selected, setSelected] = useState<ExportFormat>("docx");
   const [exporting, setExporting] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [options, setOptions] = useState<ExportOptions>({
+    fontSize: 14,
+    fontFamily: "Noto Sans SC",
+    includeImage: false,
+  });
   const { exportDocument, isProcessing } = useOCRStore();
 
   const handleExport = async () => {
     setExporting(true);
     setDownloadUrl(null);
-    const url = await exportDocument(selected);
+    const url = await exportDocument(selected, options);
     setExporting(false);
     if (url) {
       setDownloadUrl(url);
     }
   };
+
+  const isDocxOrPdf = selected === "docx" || selected === "pdf";
 
   const handleDownload = () => {
     if (downloadUrl) {
@@ -153,6 +177,89 @@ export default function ExportModal({ isOpen, onClose }: Props) {
                 );
               })}
             </div>
+
+            {isDocxOrPdf && (
+              <div className="mb-6 p-4 rounded-xl bg-bg-secondary/30 border border-white/5 space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="flex items-center gap-1.5 text-sm font-medium text-text-primary mb-2">
+                      <Type className="w-4 h-4 text-accent-primary" />
+                      字体
+                    </label>
+                    <select
+                      value={options.fontFamily}
+                      onChange={(e) =>
+                        setOptions({ ...options, fontFamily: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg bg-bg-primary border border-white/10 text-text-primary text-sm focus:outline-none focus:border-accent-primary"
+                    >
+                      {FONT_OPTIONS.map((f) => (
+                        <option key={f.value} value={f.value}>
+                          {f.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="flex items-center gap-1.5 text-sm font-medium text-text-primary mb-2">
+                      <Type className="w-4 h-4 text-accent-primary" />
+                      字号
+                    </label>
+                    <select
+                      value={options.fontSize}
+                      onChange={(e) =>
+                        setOptions({
+                          ...options,
+                          fontSize: Number(e.target.value),
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-lg bg-bg-primary border border-white/10 text-text-primary text-sm focus:outline-none focus:border-accent-primary"
+                    >
+                      {FONT_SIZE_OPTIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s} px
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-white/5">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <div
+                      className={`relative w-11 h-6 rounded-full transition-colors ${
+                        options.includeImage
+                          ? "bg-accent-primary"
+                          : "bg-white/10"
+                      }`}
+                      onClick={() =>
+                        setOptions({
+                          ...options,
+                          includeImage: !options.includeImage,
+                        })
+                      }
+                    >
+                      <div
+                        className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
+                          options.includeImage
+                            ? "translate-x-5"
+                            : "translate-x-0.5"
+                        }`}
+                      />
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Image className="w-4 h-4 text-accent-primary" />
+                      <span className="text-sm text-text-primary font-medium">
+                        同时插入识别原图
+                      </span>
+                    </div>
+                  </label>
+                  <p className="text-xs text-text-muted mt-1.5 ml-14">
+                    在每页文字前插入对应的识别图片，按页对齐
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className="flex gap-3 justify-end pt-2 border-t border-white/5">
               <button

@@ -1,0 +1,105 @@
+{
+  "taskId": "test-export-task-1781418929900",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "width": 800,
+      "height": 600,
+      "blocks": [
+        {
+          "id": "b1",
+          "text": "这是第一页的测试内容。",
+          "confidence": 0.95,
+          "boundingBox": {
+            "x": 10,
+            "y": 10,
+            "width": 200,
+            "height": 30
+          },
+          "lineNumber": 0,
+          "paragraphIndex": 0
+        },
+        {
+          "id": "b2",
+          "text": "OCR Studio 智能图像文字识别测试。",
+          "confidence": 0.92,
+          "boundingBox": {
+            "x": 10,
+            "y": 50,
+            "width": 300,
+            "height": 30
+          },
+          "lineNumber": 1,
+          "paragraphIndex": 0
+        },
+        {
+          "id": "b3",
+          "text": "English text mixed with 中文内容 should work correctly.",
+          "confidence": 0.9,
+          "boundingBox": {
+            "x": 10,
+            "y": 90,
+            "width": 400,
+            "height": 30
+          },
+          "lineNumber": 2,
+          "paragraphIndex": 1
+        }
+      ],
+      "imagePath": "E:\\solo\\lj0034\\storage\\cache\\tasks\\test-export-task-1781418929900\\processed\\test-image.png"
+    },
+    {
+      "pageNumber": 2,
+      "width": 800,
+      "height": 600,
+      "blocks": [
+        {
+          "id": "b4",
+          "text": "这是第二页的内容。",
+          "confidence": 0.93,
+          "boundingBox": {
+            "x": 10,
+            "y": 10,
+            "width": 200,
+            "height": 30
+          },
+          "lineNumber": 0,
+          "paragraphIndex": 0
+        },
+        {
+          "id": "b5",
+          "text": "测试页眉页脚功能：文件名应该出现在每页顶部。",
+          "confidence": 0.91,
+          "boundingBox": {
+            "x": 10,
+            "y": 50,
+            "width": 350,
+            "height": 30
+          },
+          "lineNumber": 1,
+          "paragraphIndex": 0
+        },
+        {
+          "id": "b6",
+          "text": "页码应该显示为 第 X 页 / 共 N 页 格式。",
+          "confidence": 0.89,
+          "boundingBox": {
+            "x": 10,
+            "y": 90,
+            "width": 300,
+            "height": 30
+          },
+          "lineNumber": 2,
+          "paragraphIndex": 1
+        }
+      ],
+      "imagePath": "E:\\solo\\lj0034\\storage\\cache\\tasks\\test-export-task-1781418929900\\processed\\test-image.png"
+    }
+  ],
+  "metadata": {
+    "originalFileName": "测试文档-导出功能验证.png",
+    "totalPages": 2,
+    "language": "chi_sim+eng",
+    "createdAt": 1781418929906
+  }
+}

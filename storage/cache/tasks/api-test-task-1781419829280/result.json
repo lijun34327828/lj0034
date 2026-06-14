@@ -1,0 +1,79 @@
+{
+  "taskId": "api-test-task-1781419829280",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "width": 800,
+      "height": 600,
+      "blocks": [
+        {
+          "id": "b1",
+          "text": "HTTP API 导出测试 - 第一页",
+          "confidence": 0.95,
+          "boundingBox": {
+            "x": 10,
+            "y": 10,
+            "width": 200,
+            "height": 30
+          },
+          "lineNumber": 0,
+          "paragraphIndex": 0
+        },
+        {
+          "id": "b2",
+          "text": "验证自定义字体、字号、页眉页脚和图片插入功能",
+          "confidence": 0.92,
+          "boundingBox": {
+            "x": 10,
+            "y": 50,
+            "width": 400,
+            "height": 30
+          },
+          "lineNumber": 1,
+          "paragraphIndex": 0
+        },
+        {
+          "id": "b3",
+          "text": "Chinese 中文 English 混合显示测试",
+          "confidence": 0.9,
+          "boundingBox": {
+            "x": 10,
+            "y": 90,
+            "width": 300,
+            "height": 30
+          },
+          "lineNumber": 2,
+          "paragraphIndex": 1
+        }
+      ],
+      "imagePath": "E:\\solo\\lj0034\\storage\\cache\\tasks\\api-test-task-1781419829280\\processed\\test-image.png"
+    },
+    {
+      "pageNumber": 2,
+      "width": 800,
+      "height": 600,
+      "blocks": [
+        {
+          "id": "b4",
+          "text": "第二页内容 - 页眉显示文件名，页脚显示页码。",
+          "confidence": 0.93,
+          "boundingBox": {
+            "x": 10,
+            "y": 10,
+            "width": 400,
+            "height": 30
+          },
+          "lineNumber": 0,
+          "paragraphIndex": 0
+        }
+      ],
+      "imagePath": "E:\\solo\\lj0034\\storage\\cache\\tasks\\api-test-task-1781419829280\\processed\\test-image.png"
+    }
+  ],
+  "metadata": {
+    "originalFileName": "API测试文档.png",
+    "totalPages": 2,
+    "language": "chi_sim+eng",
+    "createdAt": 1781419829285
+  }
+}

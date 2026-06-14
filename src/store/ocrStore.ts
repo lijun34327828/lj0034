@@ -35,7 +35,7 @@ interface OCRState {
   loadHistory: () => Promise<void>;
   uploadAndProcess: () => Promise<string | null>;
   pollTaskStatus: (taskId: string) => Promise<void>;
-  exportDocument: (format: ExportFormat) => Promise<string | null>;
+  exportDocument: (format: ExportFormat, options?: { fontSize?: number; fontFamily?: string; includeImage?: boolean }) => Promise<string | null>;
   resetAll: () => void;
 }
 
@@ -186,7 +186,7 @@ export const useOCRStore = create<OCRState>((set, get) => ({
     await poll();
   },
 
-  exportDocument: async (format: ExportFormat) => {
+  exportDocument: async (format: ExportFormat, options?) => {
     const state = get();
     if (!state.taskId) {
       set({ error: "没有可导出的内容" });
@@ -199,6 +199,7 @@ export const useOCRStore = create<OCRState>((set, get) => ({
         state.taskId,
         format,
         state.editedContent,
+        options,
       );
       set({ isProcessing: false });
       return result.downloadUrl;
